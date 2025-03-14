@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Touch Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000000;
+            margin: 0;
+        }.button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .infinity-touch-button {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.4);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .infinity-touch-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.8), 0 0 80px rgba(59, 130, 246, 0.6);
+        }
+
+        .button-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ripple-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 10.01%);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .particle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: particle-burst 0.8s ease-out;
+        }
+
+        @keyframes particle-burst {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--x), var(--y)) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .infinity-touch-button::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            border-bottom-color: #1e3a8a;
+            animation: infinity-loop 3s linear infinite;
+        }
+
+        @keyframes infinity-loop {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <button class="infinity-touch-button">
+            <span class="button-text">Tap Tap</span>
+            <div class="ripple-effect"></div>
+            <div class="particle-container"></div>
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script>
+        document.querySelector(".infinity-touch-button").addEventListener("click", function (e) {
+            const ripple = document.createElement("div");
+            ripple.className = "ripple-effect";
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+
+            const particleContainer = this.querySelector(".particle-container");
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 100 + 50;
+                particle.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+                particle.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
+                particleContainer.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        });
+
+        document.querySelector(".infinity-touch-button").addEventListener("mousemove", function (e) {
+            const rect = this.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            gsap.to(this, {
+                x: x * 10,
+                y: y * 10,
+                duration: 0.5,
+                ease: "power2.out",
+            });
+        });
+
+        document.querySelector(".infinity-touch-button").addEventListener("mouseleave", function () {
+            gsap.to(this, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out",
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neomorph Command Button</title>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #000000;
+            overflow: hidden;
+        }.btn-enhanced {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            background: #f0f0f3;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-enhanced:hover {
+            box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+            transform: scale(1.05);
+        }
+
+        .btn-enhanced:active {
+            box-shadow: inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff;
+            transform: scale(0.98);
+        }
+
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .btn-icon {
+            width: 50px;
+            height: 50px;
+            fill: #666;
+            transition: transform 0.3s ease, fill 0.3s ease;
+        }
+
+        .btn-enhanced:hover .btn-icon {
+            transform: scale(1.2);
+            fill: #333;
+        }
+
+        .btn-text {
+            margin-top: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .btn-enhanced:hover .btn-text {
+            color: #333;
+        }
+    </style>
+    </head>
+    <body>
+        <button class="btn-enhanced">
+            <div class="btn-content">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+                    <g>
+                        <path
+                            d="M64,48H56V32h8c8.836,0,16-7.164,16-16S72.836,0,64,0c-8.837,0-16,7.164-16,16v8H32v-8c0-8.836-7.164-16-16-16S0,7.164,0,16s7.164,16,16,16h8v16h-8C7.164,48,0,55.164,0,64s7.164,16,16,16c8.837,0,16-7.164,16-16v-8h16v8c0,8.836,7.164,16,16,16s16-7.164,16-16S72.836,48,64,48z M64,8c4.418,0,8,3.582,8,8s-3.582,8-8,8h-8v-8C56,11.582,59.582,8,64,8z M8,16c0-4.418,3.582-8,8-8s8,3.582,8,8v8h-8C11.582,24,8,20.418,8,16z M16,72c-4.418,0-8-3.582-8-8s3.582-8,8-8h8v8C24,68.418,20.418,72,16,72z M32,48V32h16v16H32z M64,72c-4.418,0-8-3.582-8-8v-8h8c4.418,0,8,3.582,8,8S68.418,72,64,72z" />
+                    </g>
+                </svg>
+                <span class="btn-text">Command</span>
+            </div>
+        </button>
+    </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse Share Button</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000000;
+            font-family: 'Poppins', sans-serif;
+        }.share-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-button {
+            width: 80px;
+            height: 80px;
+            border: none;
+            background: radial-gradient(circle, #00d4ff, #005678);
+            color: #fff;
+            font-size: 24px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 86, 120, 0.8);
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .share-button:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 50px rgba(0, 86, 120, 1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        .social-links {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: #001f3f;
+            color: #00d4ff;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(45deg, #00d4ff, #005678);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 86, 120, 1);
+            color: #fff;
+        }
+
+        .share-container:hover .social-links {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        @media (max-width: 768px) {
+    .share-button {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .share-button {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .social-links a {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+        gap: 8px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="share-container">
+        <button class="share-button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <div class="social-links">
+            <a href="#r" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#i" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#n" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#a" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#d" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</body>
+</html>

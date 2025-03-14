@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Futuristic 3D Button</title>
+    <style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #000000;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.button-container {
+    perspective: 800px;
+}
+.arrow-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px; 
+    background: linear-gradient(145deg, #1b1b1b, #101010);
+    color: #f8f8f8;
+    font-size: 1em; 
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        inset 0 4px 6px rgba(255, 255, 255, 0.03);
+    transform: translateZ(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.arrow-button:hover {
+    transform: translateZ(12px) translateY(-4px);
+    background: linear-gradient(145deg, #282828, #151515);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.7), 
+        0 0 12px #00ffcc,
+        inset 0 6px 10px rgba(255, 255, 255, 0.1);
+}
+.arrow-button span {
+    margin-left: 10px;
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #f0f0f0;
+    border-right: 2px solid #f0f0f0;
+    transform: rotate(45deg);
+    transition: margin-left 0.3s ease, border-color 0.3s ease;
+}
+
+.arrow-button:hover span {
+    margin-left: 16px;
+    border-color: #00ffcc;
+}
+.arrow-button::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 10px;
+    background: linear-gradient(120deg, #00ffcc, #08f7fe, #ff007f, #0033ff);
+    background-size: 300% 300%;
+    filter: blur(12px);
+    opacity: 0;
+    z-index: -1;
+    animation: neon-glow 2.5s infinite;
+}
+
+.arrow-button:hover::before {
+    opacity: 1;
+}
+.arrow-button::after {
+    content: '';
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background: radial-gradient(circle, rgba(8, 247, 254, 0.25), transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: -1;
+    animation: pulse 1.8s infinite ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+@keyframes neon-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="arrow-button">
+            Launch <span></span>
+        </button>
+    </div>
+</body>
+</html>

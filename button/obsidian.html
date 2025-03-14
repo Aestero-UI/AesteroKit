@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian Erase Button</title>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000000;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+        }.delete-btn {
+            position: relative;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #222831 0%, #000000 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 160px;
+        }
+
+        .trash-icon {
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-text {
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .progress-ring {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            transform: rotate(-90deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .progress-circle {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        .checkmark {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            opacity: 0;
+            transform: scale(0);
+            pointer-events: none;
+            left: calc(50% + 30px);
+        }
+
+        .success-text {
+            position: absolute;
+            opacity: 0;
+            color: white;
+            font-weight: 500;
+            transform: translateY(10px);
+            white-space: nowrap;
+            pointer-events: none;
+            left: calc(50% - 40px);
+        }
+
+        .delete-btn:hover:not(.deleting):not(.success) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .delete-btn.deleting {
+            background: linear-gradient(135deg, #000000 0%, #1b1a31 50%, #000000 100%);
+        }
+
+        .delete-btn.deleting .btn-text {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .delete-btn.deleting .trash-icon {
+            animation: iconFloat 1.2s ease-in-out infinite;
+        }
+
+        .delete-btn.deleting .progress-ring {
+            opacity: 1;
+            animation: progressSpin 1.5s linear infinite;
+        }
+
+        .delete-btn.deleting .progress-circle {
+            animation: progressStroke 3s linear forwards;
+        }
+
+        .delete-btn.success {
+            background: linear-gradient(135deg, #000000 0%, #393e46 100%);
+            pointer-events: none;
+        }
+
+        .delete-btn.success .trash-icon {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .delete-btn.success .btn-text {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .delete-btn.success .checkmark {
+            opacity: 1;
+            transform: scale(1) translateY(-1px);
+            animation: checkmarkPop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .delete-btn.success .success-text {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease 0.2s;
+        }
+
+        @keyframes iconFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        @keyframes progressSpin {
+            from {
+                transform: rotate(-90deg);
+            }
+
+            to {
+                transform: rotate(270deg);
+            }
+        }
+
+        @keyframes progressStroke {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0);
+            }
+
+            70% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .checkmark-path {
+            stroke-width: 2;
+            stroke: #ffffff;
+            stroke-linecap: round;
+            stroke-dasharray: 30;
+            stroke-dashoffset: 30;
+            animation: checkmarkDraw 0.3s ease-out 0.2s forwards;
+        }
+
+        @keyframes checkmarkDraw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <button class="delete-btn" onclick="startDeleteAnimation(this)">
+            <svg class="trash-icon" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+            </svg>
+
+            <span class="btn-text">Delete</span>
+
+            <svg class="progress-ring">
+                <circle class="progress-circle" cx="16" cy="16" r="14" />
+            </svg>
+
+            <svg class="checkmark" viewBox="0 0 24 24">
+                <path class="checkmark-path" fill="none" d="M4 12l6 6L20 6" />
+            </svg>
+
+            <span class="success-text">Deleted</span>
+        </button>
+
+        <script>
+            function startDeleteAnimation(button) {
+                button.classList.add('deleting');
+                button.disabled = true;
+
+                setTimeout(() => {
+                    button.classList.remove('deleting');
+                    button.classList.add('success');
+                }, 3000);
+
+                setTimeout(() => {
+                    button.classList.remove('success');
+                    button.disabled = false;
+
+                    const progressCircle = button.querySelector('.progress-circle');
+                    progressCircle.style.strokeDashoffset = '100';
+                }, 6000);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Blue Submit Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000000;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }.submit-btn {
+            position: relative;
+            padding: 0.8em 1.6em;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(145deg, #000000, #1e293b);
+            color: #e0f2fe;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(6, 82, 221, 0.2);
+            width: 70%;
+            max-width: 180px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 150%;
+            height: 400%;
+            background: conic-gradient(rgba(56, 189, 248, 0.4) 0deg,
+                    rgba(30, 41, 59, 0.6) 90deg,
+                    rgba(56, 189, 248, 0.4) 180deg,
+                    rgba(30, 41, 59, 0.6) 270deg,
+                    rgba(56, 189, 248, 0.4) 360deg);
+            animation: galaxy 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 82, 221, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn.loading::before {
+            opacity: 0.4;
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .submit-btn.loading span::after {
+            content: '.';
+            animation: dots 1s steps(5, end) infinite;
+        }
+
+        .submit-btn.submitted {
+            background: linear-gradient(145deg, #1e293b, #000000);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        @keyframes galaxy {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: '.';
+            }
+
+            40% {
+                content: '..';
+            }
+
+            60% {
+                content: '...';
+            }
+
+            80%,
+            100% {
+                content: '';
+            }
+        }
+
+        .electric-border {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                    transparent 0%,
+                    #38bdf8 30%,
+                    transparent 70%,
+                    #38bdf8 100%);
+            border-radius: 8px;
+            z-index: -1;
+            animation: electric 2s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background-size: 200% 100%;
+        }
+
+        .submit-btn.loading .electric-border {
+            opacity: 1;
+        }
+
+        @keyframes electric {
+            0% {
+                background-position: 150% 0;
+            }
+
+            100% {
+                background-position: -50% 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .submit-btn {
+                padding: 1em 2em;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="submit-btn" onclick="submitForm(this)">
+        <div class="electric-border"></div>
+        <span>Submit</span>
+    </button>
+
+    <script>
+        function submitForm(btn) {
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                btn.classList.add('submitted');
+                btn.querySelector('span').textContent = 'Submitted!';
+
+                setTimeout(() => {
+                    btn.classList.remove('submitted');
+                    btn.disabled = false;
+                    btn.querySelector('span').textContent = 'Submit';
+                }, 3000);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Button Hover With Shadow</title>
+</head>
+
+<body>
+    <button class="btn"><span>Hover me</span></button>
+    <style>
+        body {
+            overflow: hidden;
+            color: #fff;
+            font-family: Poppins, sans-serif;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }.btn {
+            font-size: 17px;
+            background: transparent;
+            border: none;
+            padding: 1em 1em;
+            color: #ffffff;
+            font-weight: bolder;
+            text-transform: uppercase;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 2;
+            transition: color 0.5s ease;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff0606;
+            transition: width 0.5s ease;
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 80%;
+            background-color: #ffc506;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            transition-delay: 0.5s;
+            z-index: 1;
+        }
+
+        .btn:hover::after {
+            transform: scaleX(1);
+        }
+
+        .btn:hover span {
+            color: #1e1e2b;
+            transition-delay: 0.5s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px #ffc506;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cancel Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000000;
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .button-container {
+            position: relative;
+            filter: drop-shadow(0 0 15px rgba(26, 115, 232, 0.2));
+        }
+
+        .liquid-button {
+            position: relative;
+            padding: 16px 35px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+            background: transparent;
+            border: 2px solid #1a73e8;
+            border-radius: 12px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .liquid-button .button-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .liquid-button .liquid {
+            position: absolute;
+            top: -80px;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #1a237e 0%, #1a73e8 100%);
+            transition: top 0.6s ease;
+            z-index: 1;
+            border-radius: 45% 55% 62% 38% / 53% 51% 49% 47%;
+            animation: liquidFlow 8s infinite linear;
+            opacity: 0.6;
+        }
+
+        .liquid-button:hover .liquid {
+            animation-duration: 6s;
+            opacity: 0.8;
+        }
+
+        .liquid-button.cancelling .liquid {
+            animation: liquidActive 2s infinite linear;
+            opacity: 0.9;
+            background: linear-gradient(45deg, #1a73e8 0%, #4a90e2 100%);
+        }
+
+        @keyframes liquidFlow {
+            0% { transform: rotate(0deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1.2); }
+        }
+
+        @keyframes liquidActive {
+            0% { transform: rotate(0deg) scale(1.5); }
+            50% { transform: rotate(180deg) scale(1.8); }
+            100% { transform: rotate(360deg) scale(1.5); }
+        }
+
+        .liquid-button.cancelling {
+            border-color: #4a90e2;
+            box-shadow: 0 0 25px rgba(74, 144, 226, 0.3);
+        }
+
+        .tick-mark {
+            display: none;
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cancelled .tick-mark {
+            display: block;
+            animation: tickFade 0.6s ease forwards;
+        }
+
+        @keyframes tickFade {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .liquid-button[disabled] {
+            cursor: progress;
+        }
+
+        .progress-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            border-top-color: #4a90e2;
+            top: -2px;
+            left: -2px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cancelling .progress-ring {
+            opacity: 1;
+            animation: progressSpin 2s linear infinite;
+        }
+
+        @keyframes progressSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .liquid-button {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button id="cancelButton" class="liquid-button">
+            <span class="button-text">
+                <span class="text">Cancel</span>
+                <svg class="tick-mark" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </span>
+            <span class="liquid"></span>
+            <div class="progress-ring"></div>
+        </button>
+    </div>
+    <script>
+        const cancelButton = document.getElementById('cancelButton');
+        const buttonText = cancelButton.querySelector('.text');
+
+        cancelButton.addEventListener('click', function() {
+            cancelButton.classList.add('cancelling');
+            buttonText.textContent = 'Cancelling...';
+            cancelButton.disabled = true;
+            setTimeout(() => {
+                cancelButton.classList.remove('cancelling');
+                buttonText.textContent = 'Cancelled';
+                cancelButton.classList.add('cancelled');
+            }, 2000);
+
+            setTimeout(() => {
+                cancelButton.classList.remove('cancelled');
+                buttonText.textContent = 'Cancel';
+                cancelButton.disabled = false;
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

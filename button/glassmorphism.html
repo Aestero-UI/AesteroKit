@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Button with a Soft UI touch</title>
+    <style>
+        :root {
+            --button-width: clamp(160px, 18vw, 200px);
+            --button-height: 50px;
+        }body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #000000;
+        }.glass-button {
+            position: relative;
+            width: var(--button-width);
+            height: var(--button-height);
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .glass-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 175, 204, 0.5),
+                    rgba(173, 216, 230, 0.5));
+            z-index: -1;
+            border-radius: 14px;
+        }
+
+        .glass-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            animation: shimmer 4s infinite linear;
+            transform: rotate(45deg);
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-150%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(150%) rotate(45deg);
+            }
+        }
+
+        .button-text {
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .downloading-text {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(8px);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+            font-size: 0.9em;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+            margin-left: 6px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: dotFloat 1.4s infinite ease-in-out;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotFloat {
+
+            0%,
+            80%,
+            100% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.6;
+            }
+
+            40% {
+                transform: translateY(-8px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .downloaded-text {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff85a2, #85d7ff);
+            width: 0%;
+            transition: width 3s linear;
+            border-radius: 0 0 14px 14px;
+        }
+
+        .smiley {
+            display: inline-block;
+            animation: smilePop 0.6s ease-out;
+            margin-left: 8px;
+        }
+
+        @keyframes smilePop {
+            0% {
+                transform: scale(0);
+            }
+
+            80% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .glass-button.active {
+            animation: microPulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes microPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.98);
+            }
+        }
+
+        .glass-button.active .button-text {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        .glass-button.active .downloading-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-button.complete {
+            animation: none;
+        }
+
+        .glass-button.complete .downloading-text {
+            opacity: 0;
+        }
+
+        .glass-button.complete .downloaded-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .glass-button {
+                --button-width: 140px;
+                --button-height: 46px;
+                font-size: 14px;
+                border-radius: 12px;
+            }
+
+            .dot {
+                width: 5px;
+                height: 5px;
+            }
+
+            .progress-bar {
+                height: 1.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="glass-button" onclick="startDownload(event)">
+        <span class="button-text">Download</span>
+        <span class="downloading-text">
+            Downloading
+            <span class="loading-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </span>
+        </span>
+        <span class="downloaded-text">
+            Done!
+            <span class="smiley">😊</span>
+        </span>
+        <div class="progress-bar"></div>
+    </button>
+
+    <script>
+        function startDownload(event) {
+            const button = event.currentTarget;
+            if (button.classList.contains('active')) return;
+
+            createRipple(event);
+
+            button.classList.add('active');
+            const progressBar = button.querySelector('.progress-bar');
+            progressBar.style.width = '100%';
+
+            setTimeout(() => {
+                button.classList.add('complete');
+                progressBar.style.width = '0%';
+            }, 3000);
+
+            setTimeout(() => {
+                button.classList.remove('active', 'complete');
+                progressBar.style.width = '0%';
+            }, 4500);
+        }
+
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            const rect = button.getBoundingClientRect();
+            ripple.style.left = `${event.clientX - rect.left}px`;
+            ripple.style.top = `${event.clientY - rect.top}px`;
+
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1000);
+        }
+    </script>
+</body>
+</html>

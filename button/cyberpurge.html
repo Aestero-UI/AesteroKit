@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberPurge Delete Button</title>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000000;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(255, 0, 51, 0.03) 25%, transparent 26%),
+                linear-gradient(90deg, transparent 24%, rgba(255, 0, 51, 0.03) 25%, transparent 26%);
+            background-size: 40px 40px;
+        }.delete-btn {
+            position: relative;
+            padding: 15px 30px;
+            background: linear-gradient(145deg, #140404 0%, #080808 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ff0033;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+            box-shadow: 
+                0 0 15px rgba(255, 0, 51, 0.2),
+                inset 0 0 10px rgba(255, 0, 51, 0.1);
+            transform: scale(0.9);
+        }
+
+        .trash-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 6px rgba(255, 0, 51, 0.6));
+            transition: all 0.4s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .btn-text {
+            display: inline-block;
+            text-shadow: 0 0 8px rgba(255, 0, 51, 0.4);
+            letter-spacing: 1px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .deleted-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            visibility: hidden;
+            color: #ff0033;
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-size: 0.9em;
+            transition: opacity 0.3s ease;
+        }
+
+        .delete-btn::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, 
+                #ff0033 0%, 
+                transparent 50%, 
+                #ff0033 100%);
+            animation: borderFlow 2.5s linear infinite;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .delete-btn.deleting {
+            animation: 
+                buttonPulse 0.8s ease-in-out infinite,
+                buttonContract 0.4s ease-out forwards;
+        }
+
+        .delete-btn.deleting .trash-icon,
+        .delete-btn.deleting .btn-text {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 51, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 51, 0.5); }
+        }
+
+        @keyframes buttonContract {
+            to { padding: 12px 25px; }
+        }
+
+        .delete-btn.deleting .trash-icon {
+            animation: 
+                nanoShake 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards,
+                iconDisintegrate 0.5s ease-out 2.8s forwards;
+        }
+
+        @keyframes nanoShake {
+            0% { transform: scale(1) translateX(0); margin-right: 10px; }
+            15% { transform: scale(3.5) translateX(0); margin-right: 0; }
+            25%, 45%, 65% { transform: scale(3.5) translateX(3px) rotate(8deg); }
+            35%, 55%, 75% { transform: scale(3.5) translateX(-3px) rotate(-8deg); }
+            85% { transform: scale(3.5) translateX(0) rotate(0); }
+            100% { transform: scale(3.5) rotate(0); }
+        }
+
+        @keyframes iconDisintegrate {
+            to { 
+                transform: scale(0) rotate(45deg);
+                opacity: 0;
+                filter: blur(2px);
+                visibility: hidden;
+            }
+        }
+
+        .delete-btn.deleted .deleted-text {
+            opacity: 1;
+            visibility: visible;
+            animation: 
+                textMatrix 1s infinite,
+                glitchEffect 0.4s infinite alternate;
+        }
+
+        @keyframes textMatrix {
+            0% { text-shadow: 0 0 15px rgba(255, 0, 51, 0.8); }
+            50% { text-shadow: 0 0 25px rgba(255, 0, 51, 1), 0 0 5px #fff; }
+            100% { text-shadow: 0 0 15px rgba(255, 0, 51, 0.8); }
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(-50%, -50%) translateX(0); }
+            20% { transform: translate(-50%, -50%) translateX(-1px); }
+            40% { transform: translate(-50%, -50%) translateX(2px); }
+            60% { transform: translate(-50%, -50%) translateX(-2px); }
+            80% { transform: translate(-50%, -50%) translateX(1px); }
+            100% { transform: translate(-50%, -50%) translateX(0); }
+        }
+
+        .delete-btn:not(.deleting):not(.deleted) .trash-icon,
+        .delete-btn:not(.deleting):not(.deleted) .btn-text {
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.4s ease 0.3s;
+        }
+
+        .delete-btn:hover:not(.deleting):not(.deleted) {
+            transform: scale(0.9) translateY(-2px);
+            filter: hue-rotate(-5deg);
+        }
+
+        .delete-btn:hover:not(.deleting):not(.deleted) .trash-icon {
+            animation: iconFloat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="delete-btn" onclick="startDeleteAnimation(this)">
+        <svg class="trash-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+        </svg>
+        <span class="btn-text">PURGE</span>
+        <span class="deleted-text">SYSTEM CLEANSE</span>
+    </button>
+
+    <script>
+        function startDeleteAnimation(button) {
+            button.classList.add('deleting');
+            button.disabled = true;
+
+            setTimeout(() => {
+                button.classList.remove('deleting');
+                button.classList.add('deleted');
+                
+                const icon = button.querySelector('.trash-icon');
+                const text = button.querySelector('.btn-text');
+                icon.style.opacity = '0';
+                icon.style.visibility = 'hidden';
+                text.style.opacity = '0';
+                text.style.visibility = 'hidden';
+            }, 3000);
+
+            setTimeout(() => {
+                button.classList.remove('deleted');
+                button.disabled = false;
+                
+                const icon = button.querySelector('.trash-icon');
+                const text = button.querySelector('.btn-text');
+                icon.style.cssText = '';
+                text.style.cssText = '';
+            }, 6000);
+        }
+    </script>
+</body>
+</html>

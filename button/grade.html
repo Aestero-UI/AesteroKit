@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>simple gradient</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: black;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }.flex {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .outer-cont {
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      position: relative;
+      background: linear-gradient(90deg, #00ffa6, #ff00d4, #00d0ff);
+      border-radius: 12px;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: inset 0px 2px 8px rgba(255, 255, 255, 0.8), inset 0px 35px 30px rgba(0, 0, 0, 1), 0px 5px 15px rgba(0, 0, 0, 0.8);
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .outer-cont:hover::before {
+      filter: blur(15px);
+    }
+
+    .outer-cont:active::before {
+      filter: blur(5px);
+      transform: translateY(1px);
+    }
+
+    .outer-cont:active {
+      box-shadow: inset 0px 0px 8px rgba(255, 255, 255, 0.8), inset 0px 35px 30px rgba(0, 0, 0, 1);
+      transform: translateY(3px);
+    }
+
+    .outer-cont:hover {
+      box-shadow: inset 0px 0px 8px rgba(255, 255, 255, 0.8), inset 0px 35px 30px rgba(0, 0, 0, 1), 0px 5px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outer-cont flex">
+    Hover Me
+  </div>
+</body>
+
+</html>

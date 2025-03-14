@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>neon glow Button</title>
+</head>
+
+<body>
+
+  <button class="animated-button">
+    <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+      </path>
+    </svg>
+    <span class="text">Modern Button</span>
+    <span class="circle"></span>
+    <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+      </path>
+    </svg>
+  </button>
+  <style>
+    .animated-button .circle,
+    .animated-button svg {
+      position: absolute;
+      transition: .8s cubic-bezier(.23, 1, .32, 1)
+    }
+
+    .animated-button .circle,
+    .animated-button .text,
+    .animated-button svg {
+      transition: .8s cubic-bezier(.23, 1, .32, 1)
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000000;
+      font-family: Poppins, sans-serif
+    }.animated-button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border: 4px solid transparent;
+      background-color: inherit;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #0f9;
+      box-shadow: 0 0 10px rgba(0, 255, 153, .4), 0 0 20px rgba(0, 255, 153, .6);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .3s
+    }
+
+    .animated-button svg {
+      width: 24px;
+      height: 24px;
+      fill: #00ff99;
+      z-index: 9
+    }
+
+    .animated-button .arr-1 {
+      right: 16px
+    }
+
+    .animated-button .arr-2 {
+      left: -25%
+    }
+
+    .animated-button .circle {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background-color: #0f9;
+      border-radius: 50%;
+      opacity: 0
+    }
+
+    .animated-button .text {
+      position: relative;
+      z-index: 1;
+      transform: translateX(-12px)
+    }
+
+    .animated-button:hover {
+      box-shadow: 0 0 0 12px transparent;
+      border-radius: 12px
+    }
+
+    .animated-button:hover .arr-1 {
+      right: -25%
+    }
+
+    .animated-button:hover .arr-2 {
+      left: 16px
+    }
+
+    .animated-button:hover .text {
+      transform: translateX(12px)
+    }
+
+    .animated-button:hover svg {
+      fill: #212121
+    }
+
+    .animated-button:active {
+      scale: 0.95;
+      box-shadow: 0 0 0 4px #0f9
+    }
+
+    .animated-button:hover .circle {
+      width: 220px;
+      height: 220px;
+      opacity: 1
+    }
+
+    .animated-button:hover {
+      color: #212121;
+      box-shadow: 0 0 20px rgba(0, 255, 153, .8), 0 0 30px rgba(0, 255, 153, .5);
+      background-color: rgba(0, 255, 153, .2);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(0, 255, 153, .8), 0 0 40px rgba(0, 255, 153, .6)
+    }
+
+    @media (max-width: 768px) {
+      .animated-button {
+        padding: 12px 28px;
+        font-size: 16px;
+        gap: 8px;
+        border-width: 3px;
+      }
+
+      .animated-button svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .animated-button .circle {
+        width: 15px;
+        height: 15px;
+      }
+
+      .animated-button:hover .circle {
+        width: 180px;
+        height: 180px;
+      }
+    }
+  </style>
+</body>
+
+</html>

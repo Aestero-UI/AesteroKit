@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Download Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000000;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }.button-container {
+            position: relative;
+            width: 100%;
+            max-width: 180px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .download-button {
+            position: relative;
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 0;
+            color: #fff;
+            background: linear-gradient(135deg, #2b2d42, #1a1b2f);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            box-shadow: 0 4px 20px rgba(26, 35, 126, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-button .icon {
+            width: 24px;
+            height: 24px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>') no-repeat center;
+            background-size: contain;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .loading-spinner div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .download-button.downloading {
+            cursor: progress;
+            background: linear-gradient(135deg, #2d3250, #24283b);
+            font-size: 14px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 25px rgba(25, 118, 210, 0.4);
+        }
+
+        .download-button.downloading .icon {
+            display: none;
+        }
+
+        .download-button.downloading .text {
+            display: inline;
+        }
+
+        .download-button.downloading .loading-spinner {
+            display: block;
+        }
+
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-content {
+            text-align: center;
+            color: white;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-overlay.active .success-content {
+            transform: scale(1);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat center;
+            margin: 0 auto 20px;
+            animation: iconPop 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes iconPop {
+            0% {
+                transform: scale(0);
+            }
+
+            80% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .text {
+            display: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .success-content h2 {
+            font-size: 2em;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .button-container {
+                max-width: 150px;
+            }
+
+            .download-button {
+                padding: 10px 15px;
+                border-radius: 8px;
+            }
+
+            .download-button.downloading {
+                font-size: 12px;
+            }
+
+            .success-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .success-content h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="download-button">
+            <span class="icon"></span>
+            <span class="text">Downloading</span>
+            <div class="loading-spinner">
+                <div></div>
+            </div>
+        </button>
+    </div>
+    <div class="success-overlay">
+        <div class="success-content">
+            <div class="success-icon"></div>
+            <h2>Completed!</h2>
+        </div>
+    </div>
+    <script>
+        const button = document.querySelector('.download-button');
+        const successOverlay = document.querySelector('.success-overlay');
+        const originalHTML = button.innerHTML;
+
+        button.addEventListener('click', function () {
+            if (this.classList.contains('downloading')) return;
+
+            this.classList.add('downloading');
+            this.innerHTML = `
+        <span class="text">Downloading</span>
+        <div class="loading-spinner"><div></div></div>
+      `;
+
+            setTimeout(() => {
+                this.classList.remove('downloading');
+                successOverlay.classList.add('active');
+
+                setTimeout(() => {
+                    successOverlay.classList.remove('active');
+                    this.innerHTML = originalHTML;
+                }, 3000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
