@@ -1,4 +1,4 @@
-![AesteroKit](https://aestero-ui.vercel.app/blog-info/2)
+![AesteroKit](https://raw.githubusercontent.com/Aestero-UI/AesteroKit/2d9d9d24f94ef5201b1f74dced330b23820c8b4c/Aestero.png)
 
 
 # AesteroKit  
