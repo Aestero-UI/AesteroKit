@@ -10,7 +10,7 @@ AesteroKit provides an extensive range of prebuilt UI components, ensuring that 
 
 - **Live Previews** – Experience the component before implementation.
 - **Base Code (HTML, CSS, JS)** – Direct access to the essential structure and styling.
-- **Framework Integration** – Optimized versions for **React, Tailwind, Next.js, and more**.
+- **Framework Integration** – Optimized versions for **React, Vue, Angular, and more**.
 - **Aesthetic & Professional Designs** – Crafted for high-end user experiences.
 - **Easy Copy-Paste Implementation** – Directly integrate components with just a few clicks.
 
@@ -33,7 +33,7 @@ Stay updated with UI/UX trends, design principles, and web development insights:
 ## 📜 Licensing & Attribution
 All components in this repository are available under the **MIT License**, granting full freedom to use, modify, and distribute them in personal and commercial projects.
 
-While attribution is not required, we appreciate crediting **Aestero UI**, as it supports the development of more high-quality, open-source UI resources.
+While attribution is not required, we appreciate crediting **[Aestero UI](https://aestero-ui.vercel.app/)**, as it supports the development of more high-quality, open-source UI resources.
 
 ## 🔗 Get Started Now
 Enhance your web applications with **AesteroKit** – your go-to library for sleek, professional UI components. Browse our full collection on **[Aestero UI](https://aestero-ui.vercel.app/)** and start building today!
